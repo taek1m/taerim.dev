@@ -1,39 +1,39 @@
 import React, { useRef, useState, useEffect } from "react";
 
 function MusicPlayer({ isPlaying, setIsPlaying }) {
-  const audioRef1 = useRef(new Audio("/debussy.mp3")); // First song
-  const audioRef2 = useRef(new Audio("/sakamoto.mp3")); // Second song
-  const [currentTrack, setCurrentTrack] = useState(1); // Track indicator
+  const audioRef1 = useRef(new Audio("/debussy.mp3"));
+  const audioRef2 = useRef(new Audio("/sakamoto.mp3"));
+  const [currentTrack, setCurrentTrack] = useState(1);
 
   useEffect(() => {
-    const playMusic = async () => {
-      if (isPlaying) {
-        try {
-          await audioRef1.current.play();
-        } catch (err) {
-          console.log("Autoplay blocked. User interaction required.");
-        }
-      }
+    const audio1 = audioRef1.current;
+    const audio2 = audioRef2.current;
+
+    const handleAudio1Ended = () => {
+      setCurrentTrack(2);
+      audio2.play();
     };
 
-    playMusic();
-
-    // Event listener to switch songs
-    audioRef1.current.addEventListener("ended", () => {
-      setCurrentTrack(2);
-      audioRef2.current.play();
-    });
-
-    audioRef2.current.addEventListener("ended", () => {
+    const handleAudio2Ended = () => {
       setCurrentTrack(1);
-      audioRef1.current.play();
-    });
+      audio1.play();
+    };
+
+    audio1.onended = handleAudio1Ended;
+    audio2.onended = handleAudio2Ended;
+
+    if (isPlaying) {
+      currentTrack === 1 ? audio1.play() : audio2.play();
+    } else {
+      audio1.pause();
+      audio2.pause();
+    }
 
     return () => {
-      audioRef1.current.removeEventListener("ended", () => {});
-      audioRef2.current.removeEventListener("ended", () => {});
+      audio1.onended = null;
+      audio2.onended = null;
     };
-  }, [isPlaying]);
+  }, [isPlaying, currentTrack]);
 
   const togglePlay = () => {
     if (isPlaying) {
@@ -45,7 +45,9 @@ function MusicPlayer({ isPlaying, setIsPlaying }) {
     setIsPlaying(!isPlaying);
   };
 
-  return <button onClick={togglePlay} style={{ display: "none" }}></button>; // Hidden control
+  return (
+    <button onClick={togglePlay} style={{ display: "none" }}></button>
+  );
 }
 
 export default MusicPlayer;
