@@ -58,3 +58,11 @@
   color: #00c9ff;
   background: rgba(255, 255, 255, 0.3);
 }
+
+body.projects-page .navbar a {
+  color: #000 !important;
+}
+
+body.projects-page .nav-icon {
+  color: #000 !important;  /* 검정 글씨 */
+}

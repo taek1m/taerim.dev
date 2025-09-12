@@ -1,42 +1,27 @@
 .about-container {
-  text-align: center;
-  padding: 100px 20px;
-  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 60px;
+  padding: 100px 60px;
+  min-height: 100vh;
   position: relative;
+  color: #fff;
   z-index: 1;
   overflow-y: auto;
 }
 
-.text {
-  margin-bottom: 40px; 
-}
-
-.about-container h1 {
-  font-size: 30px;
-  color: #ffacbe;
-}
-
-.about-container p {
-  text-align: center;
-  max-width: 940px;
-  margin: auto;
-  margin-bottom: 60px;
-  font-size: 18px;
-  font-weight: lighter;
-  line-height: 1.2;
-  color: #f9bbd6;
-}
-
+/* 별 배경 */
 .about-background {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(to top, 
-      rgba(10, 10, 50, 1) 10%, 
-      rgba(5, 5, 30, 1) 50%, 
-      rgba(0, 0, 20, 1) 100%
+  background: linear-gradient(to top,
+    rgba(10, 10, 50, 1) 10%,
+    rgba(5, 5, 30, 1) 50%,
+    rgba(0, 0, 20, 1) 100%
   );
   z-index: -1;
 }
@@ -57,122 +42,84 @@
   100% { opacity: 0; transform: scale(0.8); }
 }
 
-.skills-container {
-  margin-top: 70px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
+/* 왼쪽 텍스트 */
+.about-text {
+  flex: 1;
+  max-width: 55%;
+  text-align: left;
 }
 
-.skill-card {
-  width: 100px;
-  height: 75px;
-  position: relative;
-  perspective: 1000px;
-  border-radius: 13px;
-  box-shadow: 0 4px 10px rgba(255, 176, 225, 0.3);
-  cursor: pointer;
+.about-text h1 {
+  font-size: 36px;
+  color: #ffacbe;
+  margin: 0 0 30px 0;
 }
 
-.skill-inner {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.5s ease-in-out;
-}
-
-.skill-front, .skill-back {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
+.about-text p {
+  font-size: 20px;
   font-weight: lighter;
+  line-height: 1.6;
+  margin: 0 0 25px 0;
+  color: #f9bbd6;
+}
+
+.skills-container {
+  flex: 0 0 40%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;   /* 2열 */
+  gap: 20px;
+  align-items: stretch;
+  grid-auto-rows: 200px;  /* 박스 높이를 모두 200px로 고정 */
+}
+
+.skill-category {
+  padding: 20px;
   border-radius: 15px;
-  backface-visibility: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  text-align: left;
 }
 
-.skill-front {
-  background: linear-gradient(135deg, #ffbcf2, #eef1a4);
-  color: rgb(12, 0, 80);
-  z-index: 2;
+.skill-category h2 {
+  margin-bottom: 12px;
+  font-size: 18px;
+  color: #ffe6f3;
 }
 
-.skill-back {
-  background: linear-gradient(135deg, #eef1a4, #f41c11);
-  color: rgb(255, 255, 255);
-  transform: rotateY(180deg);
+.skill-category ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.skill-inner.transformed {
-  transform: rotateY(180deg);
-}
-
-/* Floating TMI Button */
-.tmi-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: rgb(54, 69, 98);
-  color: white;
-  font-size: 24px;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
-  transition: transform 0.2s ease-in-out;
-}
-
-.tmi-button:hover {
-  transform: scale(1.1);
-}
-
-/* TMI Pop-up */
-.tmi-popup {
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
-  background: rgba(229, 198, 207, 0.68);
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(255, 226, 226, 0.3);
-  width: 260px;
-  text-align: center;
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-.tmi-content {
+.skill-category li {
   font-size: 16px;
-  color: #333;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+/* 반응형 (모바일에서는 세로 쌓기) */
+@media (max-width: 900px) {
+  .about-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .about-text {
+    max-width: 100%;
+  }
+  .skills-container {
+    flex: 1;
+    justify-content: center;
+  }
+}
+.about-images {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
 }
 
-.tmi-content h3 {
-  margin: 0 0 10px;
-  font-size: 15px;
-  color: #1e235d;
-}
+.about-images img {
+  width: 180px;        /* 크기 확 줄임 */
 
-.tmi-content p {
-  margin: 5px 0;
-  font-size: 12px;
-  color: #1e235d;
-}
-
-
-.close-tmi:hover {
-  background: #d3b6dd;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
 }

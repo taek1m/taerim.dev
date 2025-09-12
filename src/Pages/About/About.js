@@ -4,12 +4,10 @@ import "./About.css";
 function About() {
   const [stars, setStars] = useState([]);
   const [transformedCards, setTransformedCards] = useState({});
-  const [showTMI, setShowTMI] = useState(false);
 
   useEffect(() => {
     const numStars = 50;
     let starArray = [];
-
     for (let i = 0; i < numStars; i++) {
       starArray.push({
         id: i,
@@ -18,7 +16,6 @@ function About() {
         animationDelay: Math.random() * 3 + "s",
       });
     }
-
     setStars(starArray);
   }, []);
 
@@ -50,45 +47,68 @@ function About() {
           ></div>
         ))}
       </div>
-      <h1>About Me</h1>
-      <p className="text">
-        My name is Taerim Kim. I am a South Korean currently studying CS at Virginia Tech.
-        I'm also a developer passionate about building artistic and creative digital experiences.
-        Bg music is my favorite classical music piece- Reflets dans l'eau by Debussy. 
-        Hope you like it!
-      </p>
-      <img src="/duggoweb.png" width="120"/>
-      <img src="/duggoweb2.png" width="180"/>
-      <div className="skills-container">
-        {skills.map((skill, index) => (
-          <div
-            key={index}
-            className="skill-card"
-            onClick={() => toggleTransform(index)}
-          >
-            <div
-              className={`skill-inner ${transformedCards[index] ? "transformed" : ""}`}
-            >
-              <div className="skill-front">{skill.name}</div>
-              <div className="skill-back">{skill.level}</div>
-            </div>
-          </div>
-        ))}
+
+      {/* 왼쪽 텍스트 + 사진 */}
+      <div className="about-text">
+        <h1>About Me</h1>
+        <p>
+          My name is Taerim Kim and I love to be called "Tae" (pronounced as Tay).
+          I am a South Korean student currently studying CS at Virginia Tech.
+        </p>
+        <p>
+          I'm passionate about building artistic and creative digital experiences.
+        </p>
+        <p>
+          Background music is my favorite classical music piece —
+          <em> Reflets dans l'eau</em> by Debussy. Hope you like it!
+        </p>
+
+        {/* 여기에 사진 */}
+        <div className="about-images">
+          <img src="/duggoweb.png" alt="duggo1" />
+        </div>
       </div>
 
-      <button className="tmi-button" onClick={() => setShowTMI(!showTMI)}>💭</button>
+      {/* 오른쪽 스킬 카드 */}
+      <div className="skills-container">
+  <div className="skill-category glass">
+    <h2>Programming Languages</h2>
+    <ul>
+      <li>Java</li>
+      <li>Python</li>
+      <li>JavaScript</li>
+      <li>C</li>
+    </ul>
+  </div>
+
+  <div className="skill-category glass">
+    <h2>Frontend</h2>
+    <ul>
+      <li>React</li>
+      <li>CSS</li>
+      <li>HTML</li>
+    </ul>
+  </div>
+
+  <div className="skill-category glass">
+    <h2>Backend & DB</h2>
+    <ul>
+      <li>Node.js</li>
+      <li>PostgreSQL</li>
+    </ul>
+  </div>
 
 
-      {showTMI && (
-        <div className="tmi-popup">
-          <div className="tmi-content">
-            <h3>TMI About Tae</h3>
-            <p>I started coding because I was inspired by game "Stardew Valley"</p>
-            <p>My coding playlist is 30% classical music, 30% jazz, 30% hip-hop, 10% k-pop 🎶</p>
-            <p>I am great at cooking korean food!</p>
-          </div>
-        </div>
-      )}
+  <div className="skill-category glass">
+    <h2>Tools & Others</h2>
+    <ul>
+      <li>Git</li>
+      <li>Linux</li>
+      <li>PyTorch</li>
+      <li>Figma</li>
+    </ul>
+  </div>
+</div>
     </div>
   );
 }

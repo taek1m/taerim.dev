@@ -1,96 +1,184 @@
 .projects-container {
+  padding: 60px 20px;
   text-align: center;
-  padding: 100px;
-  background: linear-gradient(to bottom, #202020, #111119);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  position: relative;
-  overflow: hidden;
 }
 
-/* Rain Effect */
-.rain {
+.projects-title {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  color: #333;
+}
+
+.projects-grid {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+/* 스티키노트 카드 */
+.project-card {
+  background: #fff9b1; /* 기본 노란 포스트잇 색 */
+  border-radius: 8px;
+  padding: 20px;
+  width: 220px;
+  min-height: 180px;
+  text-align: left;
+  box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.15);
+  transform: rotate(-2deg); /* 살짝 기울여서 자연스럽게 */
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+}
+
+/* hover 시 카드 똑바로 + 들썩임 */
+.project-card:hover {
+  transform: rotate(0deg) translateY(-6px);
+  box-shadow: 4px 12px 20px rgba(0, 0, 0, 0.25);
+}
+
+.project-card h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #333;
+  font-weight: bold;
+}
+
+/* 버튼 그룹 */
+.button-group {
+  display: flex;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.project-link,
+.more-btn {
+  position: relative;
+  background: none;       /* 박스 배경 제거 */
+  border: none;
+  padding: 4px 6px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #222;            /* 글자는 어두운색 */
+  cursor: pointer;
+  text-decoration: none;
+  z-index: 1;
+}
+
+/* 형광펜 하이라이트 효과 */
+.project-link::before,
+.more-btn::before {
+  content: "";
   position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2px;            /* 글자보다 살짝 아래 */
+  height: 55%;            /* 글자 뒷부분만 칠해짐 */
+  background: #9ff5b798;    /* 노란 형광펜 */
+  z-index: -1;
+  transform: rotate(-1deg);
+  transition: background 0.2s ease;
+}
+
+/* hover 시 다른 형광펜 색으로 */
+.project-link:hover::before,
+.more-btn:hover::before {
+  background: #ffa1cc98; /* 하늘색 형광펜 */
+}
+
+/* 모달 오버레이 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 2;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
-.rain.back-row {
-  display: none;
-  z-index: 1;
-  bottom: 60px;
-  opacity: 0.5;
+/* 모달 콘텐츠 */
+.modal-content {
+  background: #fffef9;
+  padding: 30px;
+  border-radius: 16px;
+  max-width: 500px;
+  text-align: left;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  animation: popIn 0.3s ease;
 }
 
-/* Individual Drops */
-.drop {
-  position: absolute;
-  bottom: 100%;
-  width: 15px;
-  height: 120px;
-  pointer-events: none;
-  animation: drop 0.8s linear infinite;
+.modal-content h2 {
+  color: #444;
+  margin-bottom: 15px;
 }
 
-/* Drop Falling Animation */
-@keyframes drop {
-  0% {
-    transform: translateY(0vh);
-    opacity: 1;
-  }
-  85% {
-    transform: translateY(90vh);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(90vh);
-    opacity: 0; /* Hide drop when it reaches bottom */
-  }
+.modal-content p {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #555;
+  white-space: pre-line; /* 줄바꿈 유지 */
 }
 
-/* Drop Stem (Falling Raindrop) */
-.stem {
-  width: 1px;
-  height: 80%;
-  margin-left: 7px;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.3));
-  animation: stem 0.8s linear infinite;
+.close-btn {
+  margin-top: 20px;
+  background: #333;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  color: white;
+  cursor: pointer;
+  float: right;
 }
 
-/* Splat Effect (Splashing Water at Bottom) */
-.splat {
-  width: 20px;
-  height: 10px;
-  border-top: 3px dotted rgba(255, 255, 255, 0.6);
-  border-radius: 50%;
-  opacity: 0;
-  transform: scale(0);
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  animation: splat 0.3s linear infinite;
-  animation-delay: 0.8s; /* Delays until drop disappears */
+.close-btn:hover {
+  background: #555;
 }
 
-/* Splat Animation */
-@keyframes splat {
-  0% {
+/* 귀여운 모달 애니메이션 */
+@keyframes popIn {
+  from {
+    transform: scale(0.8);
     opacity: 0;
-    transform: scale(0);
   }
-  85% {
-    opacity: 1;
+  to {
     transform: scale(1);
+    opacity: 1;
   }
-  100% {
-    opacity: 0;
-    transform: scale(1.5);
-  }
+}
+
+.projects-container {
+  padding: 60px 20px;
+  text-align: center;
+  min-height: 100vh;
+
+  /* 📒 공책 줄무늬 배경 */
+  background: repeating-linear-gradient(
+    to bottom,
+    #fdfdfd,          /* 기본 배경 흰색 */
+    #fdfdfd 28px,     /* 줄 간격 */
+    #c2dbf1 29px      /* 파란 줄 */
+  );
+}
+
+.projects-page .navbar a,
+.projects-page .navbar li,
+.projects-page .navbar span {
+  color: #000 !important;  /* 검정 글씨 */
+}
+
+/* 기본 MusicPlayer 버튼 (밝은 배경에 흰 글씨) */
+.music-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Projects 페이지에서는 검은 네브바랑 어울리게 */
+body.projects-page .music-btn {
+  color: #000; /* 검은색 글씨 */
 }
