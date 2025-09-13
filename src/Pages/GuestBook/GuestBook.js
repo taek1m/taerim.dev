@@ -7,42 +7,44 @@ function Guestbook() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
 
-  // Fetch messages from Firestore
+  const PALETTE = ["#FFEB99", "#FFD1DC", "#B5EAD7", "#C7CEEA"];
+
+  // Firestore에서 메시지 불러오기
   useEffect(() => {
     const fetchMessages = async () => {
-      const querySnapshot = await getDocs(collection(db, "guestbook"));
-      const messagesData = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+      const qs = await getDocs(collection(db, "guestbook"));
+      const data = qs.docs.map((doc) => {
+        const d = doc.data();
+        return {
+          id: doc.id,
+          ...d,
+          // 불러올 때 한 번만 랜덤 색 지정
+          color: PALETTE[Math.floor(Math.random() * PALETTE.length)],
+        };
+      });
 
-      // Sort messages by timestamp (newest first)
-      messagesData.sort((a, b) => b.timestamp?.seconds - a.timestamp?.seconds);
-      setMessages(messagesData);
+      // 최신순 정렬
+      data.sort((a, b) => (b.timestamp?.seconds ?? 0) - (a.timestamp?.seconds ?? 0));
+      setMessages(data);
     };
-
     fetchMessages();
   }, []);
 
-  // Submit new message
+  // 새 메시지 추가
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (newMessage.trim() === "") return;
-
+    if (!newMessage.trim()) return;
     await addDoc(collection(db, "guestbook"), {
       text: newMessage,
       timestamp: serverTimestamp(),
     });
-
-    setNewMessage(""); 
-    window.location.reload(); 
+    setNewMessage("");
+    window.location.reload();
   };
 
   return (
     <div className="guestbook-page">
       <div className="guestbook-container">
-        
-        {/* Left Side: Input Form */}
         <div className="guestbook-form-container">
           <h2>Guestbook</h2>
           <form onSubmit={handleSubmit} className="guestbook-form">
@@ -57,10 +59,13 @@ function Guestbook() {
           </form>
         </div>
 
-        {/* Right Side: Message Log */}
         <div className="guestbook-messages-container">
           {messages.map((msg) => (
-            <div key={msg.id} className="guestbook-message">
+            <div
+              key={msg.id}
+              className="guestbook-message"
+              style={{ "--noteBg": msg.color }}
+            >
               <p>{msg.text}</p>
               {msg.timestamp && (
                 <span className="timestamp">
