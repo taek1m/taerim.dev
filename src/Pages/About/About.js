@@ -44,7 +44,7 @@ function About() {
           I'm passionate about building artistic and creative digital experiences. 
         </p>
         <p>
-          I love cooking and breakdancing, I enjoy surprise people with food and with my breakdance move too! 
+          I love cooking and breakdancing, I enjoy surprising people with food and with my breakdance move too! 
         </p>
         <p>
           Background music is my favorite classical music piece —
