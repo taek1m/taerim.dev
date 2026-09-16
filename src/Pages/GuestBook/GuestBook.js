@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import { db } from "../../firebaseConfig";
 import { collection, addDoc, getDocs, serverTimestamp } from "firebase/firestore";
 import "./GuestBook.css";
+const PALETTE = ["#FFEB99", "#FFD1DC", "#B5EAD7", "#C7CEEA"];
 
 function Guestbook() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-
-  const PALETTE = ["#FFEB99", "#FFD1DC", "#B5EAD7", "#C7CEEA"];
 
   // Firestore에서 메시지 불러오기
   useEffect(() => {
