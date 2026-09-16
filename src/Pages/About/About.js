@@ -52,11 +52,12 @@ function About() {
       <div className="about-text">
         <h1>About Me</h1>
         <p>
-          My name is Taerim Kim and I love to be called "Tae" (pronounced as Tay).
-          I am a South Korean student currently studying CS at Virginia Tech.
+          My name is Taerim Kim and I go by "Tae"! (pronounced as Tay).
+          I am a South Korean student studying Computer Science at Virginia Tech.
+          I'm passionate about building artistic and creative digital experiences. 
         </p>
         <p>
-          I'm passionate about building artistic and creative digital experiences.
+          I love cooking and breakdancing, I enjoy surprise people with food and with my breakdance move too! 
         </p>
         <p>
           Background music is my favorite classical music piece —
