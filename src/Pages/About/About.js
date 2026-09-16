@@ -3,7 +3,6 @@ import "./About.css";
 
 function About() {
   const [stars, setStars] = useState([]);
-  const [transformedCards, setTransformedCards] = useState({});
 
   useEffect(() => {
     const numStars = 50;
@@ -19,18 +18,6 @@ function About() {
     setStars(starArray);
   }, []);
 
-  const skills = [
-    { name: "JavaScript", level: "Advanced" },
-    { name: "Python", level: "Intermediate" },
-    { name: "C", level: "Intermediate" },
-    { name: "Java", level: "Advanced" },
-    { name: "Swift", level: "Intermediate" },
-    { name: "CSS", level: "Advanced" },
-  ];
-
-  const toggleTransform = (index) => {
-    setTransformedCards((prev) => ({ ...prev, [index]: !prev[index] }));
-  };
 
   return (
     <div className="about-container">
